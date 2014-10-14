@@ -14,10 +14,16 @@ f2<-f1[with(f1,dmy(Date)>=dmy("01/02/2007") & dmy(Date)<= dmy("02/02/2007")),]
 ## prepare y variable
 f3<-as.numeric(f2$Global_active_power)
 
-##draw  a histogram
-hist(f3, xlab="Global Active Power (kilowatts)", col="red", main="Global Active Power", yaxt="n")
-axis(side=2, at=seq(0,1200, 200), labels=seq(0,1200,200))
+##prepare x variable
+f4<-paste(f2$Date,f2$Time)
 
-plot1=dev.cur()
-dev.copy(png, file = "plot1.png",width = 480, height = 480)
+f5<-strptime(f4, "%d/%m/%Y %H:%M:%S") 
+
+##plot
+plot(f5, f3, xlab=""  ,ylab = "Global Active Power (kilowatts)", type = "l")
+lines(f5, f3)
+
+##save as .png file
+plot2=dev.cur()
+dev.copy(png, file = "plot2.png", width = 480, height = 480)
 dev.off()
